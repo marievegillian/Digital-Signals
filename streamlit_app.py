@@ -107,7 +107,19 @@ if st.button("Plot Signal"):
             signal = differential_manchester_high_encode(data)
         elif encoding_type == "Differential Manchester (Initially Low)":
             signal = differential_manchester_low_encode(data)
+        
+        x_labels = [bit for bit in data for _ in range(2)]
 
+        plt.figure(figsize=(10, 2))
+        plt.step(range(len(signal)), signal, where='mid')
+        plt.ylim(-2, 2)
+        plt.xticks(range(len(signal)), x_labels)
+        plt.title(f"{encoding_type} Encoding")
+        plt.xlabel("Bits")
+        plt.ylabel("Voltage Level")
+        st.pyplot(plt)
+    else:
+        st.error("Please enter binary data.")
         plt.figure(figsize=(10, 2))
         plt.step(range(len(signal)), signal, where='mid')
         plt.ylim(-2, 2)
