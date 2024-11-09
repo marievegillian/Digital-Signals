@@ -118,14 +118,6 @@ if st.button("Plot Signal"):
         plt.xlabel("Bits")
         plt.ylabel("Voltage Level")
         st.pyplot(plt)
-    else:
-        st.error("Please enter binary data.")
-        plt.figure(figsize=(10, 2))
-        plt.step(range(len(signal)), signal, where='mid')
-        plt.ylim(-2, 2)
-        plt.title(f"{encoding_type} Encoding")
-        plt.xlabel("Bit Position")
-        plt.ylabel("Voltage Level")
-        st.pyplot(plt)
+   
     else:
         st.error("Please enter binary data.")
