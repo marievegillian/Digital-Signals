@@ -27,8 +27,8 @@ def bipolar_ami_encode(data):
             signal.append(0)
     return signal
 
-def pesudoternary_encode(data):
-    """Psedoternary encoding"""
+def pseudoternary_encode(data):
+    """Pseudoternary encoding"""
     signal = []
     last_non_zero = -1
     for bit in data:
@@ -54,7 +54,7 @@ st.title("Digital Signal Encoder")
 
 data = st.text_input("Enter binary data (e.g., 101010):", "")
 encoding_type = st.selectbox("Choose Encoding Technique", 
-                             ["NRZ-L", "NRZ-I", "Bipolar AMI","Psseudoternary"])
+                             ["NRZ-L", "NRZ-I", "Bipolar AMI","Pseudoternary"])
 
 if st.button("Plot Signal"):
     if data:
