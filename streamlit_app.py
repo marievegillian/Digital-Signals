@@ -89,35 +89,39 @@ st.title("Digital Signal Encoder")
 
 data = st.text_input("Enter binary data (e.g., 101010):", "")
 encoding_type = st.selectbox("Choose Encoding Technique", 
-                             ["NRZ-L", "NRZ-I", "Bipolar AMI","Pseudoternary","Manchester","Differential Manchester (Initially High)", "Differential Manchester(Initially Low)"])
+                             ["NRZ-L", "NRZ-I", "Bipolar AMI","Pseudoternary","Manchester","Differential Manchester (Initially High)", "Differential Manchester (Initially Low)"])
 
 if st.button("Plot Signal"):
     if data:
         if encoding_type == "NRZ-L":
             signal = nrzl_encode(data)
+            x_labels = list(data)
         elif encoding_type == "NRZ-I":
             signal = nrzi_encode(data)
+            x_labels = list(data)
         elif encoding_type == "Bipolar AMI":
             signal = bipolar_ami_encode(data)
-        elif encoding_type == "Pseudoternary":
-            signal = pseudoternary_encode(data)
+            x_labels = list(data)
         elif encoding_type == "Manchester":
             signal = manchester_encode(data)
+            x_labels = list(data)
         elif encoding_type == "Differential Manchester (Initially High)":
             signal = differential_manchester_high_encode(data)
+            x_labels = list(data)
         elif encoding_type == "Differential Manchester (Initially Low)":
             signal = differential_manchester_low_encode(data)
+            x_labels = list(data)
         
-        x_labels = [bit for bit in data for _ in range(2)]
-
         plt.figure(figsize=(10, 2))
         plt.step(range(len(signal)), signal, where='mid')
         plt.ylim(-2, 2)
-        plt.xticks(range(len(signal)), x_labels)
+
+        tick_positions = range(1, len(signal), 2)
+        plt.xticks(tick_positions, x_labels)
+
         plt.title(f"{encoding_type} Encoding")
         plt.xlabel("Bits")
         plt.ylabel("Voltage Level")
         st.pyplot(plt)
-   
     else:
         st.error("Please enter binary data.")
