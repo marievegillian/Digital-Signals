@@ -116,7 +116,11 @@ if st.button("Plot Signal"):
         plt.step(range(len(signal)), signal, where='mid')
         plt.ylim(-2, 2)
 
-        tick_positions = range(1, len(signal), 2)
+        if encoding_type in ["Manchester", "Differential Manchester (Initially High)", "Differential Manchester (Initially Low)"]:
+            tick_positions = range(1, len(signal), 2)
+        else:
+            tick_positions = range(len(signal))
+        # tick_positions = range(1, len(signal), 2)
         plt.xticks(tick_positions, x_labels)
 
         plt.title(f"{encoding_type} Encoding")
