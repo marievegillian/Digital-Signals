@@ -44,36 +44,52 @@ def manchester_encode(data):
     signal = []
     for bit in data:
         if bit == '1':
-            signal.extend([1, -1])  # High-to-low transition
+            signal.extend([-1, 1])
         else:
-            signal.extend([-1, 1])  # Low-to-high transition
+            signal.extend([1, -1])
     return signal
     
-def differential_manchester_encode(data, initial_state='high'):
-    """Differential Manchester encoding with selectable initial state"""
+def differential_manchester_high_encode(data):
+    """Differential Manchester encoding following specified rules."""
     signal = []
-    current_level = 1 if initial_state == 'high' else -1  # Start with high or low
+    current_level = 1
 
     for bit in data:
-        # Differential encoding: transition at start if bit is '0'
         if bit == '0':
+            current_level *= -1
             signal.append(current_level)
-            current_level *= -1  # Toggle mid-bit
+            current_level *= -1
             signal.append(current_level)
         else:
-            # Transition only mid-bit for '1'
+            signal.append(current_level)
+            current_level *= -1
+            signal.append(current_level)
+
+    return signal
+
+def differential_manchester_low_encode(data):
+    """Differential Manchester encoding following specified rules."""
+    signal = []
+    current_level = -1
+
+    for bit in data:
+        if bit == '0':
             current_level *= -1
             signal.append(current_level)
             current_level *= -1
             signal.append(current_level)
-    
+        else:
+            signal.append(current_level)
+            current_level *= -1
+            signal.append(current_level)
+
     return signal
 
 st.title("Digital Signal Encoder")
 
 data = st.text_input("Enter binary data (e.g., 101010):", "")
 encoding_type = st.selectbox("Choose Encoding Technique", 
-                             ["NRZ-L", "NRZ-I", "Bipolar AMI","Pseudoternary","Manchester","Differential Manchester"])
+                             ["NRZ-L", "NRZ-I", "Bipolar AMI","Pseudoternary","Manchester","Differential Manchester (Initially High)", "Differential Manchester(Initially Low)"])
 
 if st.button("Plot Signal"):
     if data:
@@ -87,9 +103,11 @@ if st.button("Plot Signal"):
             signal = pseudoternary_encode(data)
         elif encoding_type == "Manchester":
             signal = manchester_encode(data)
-        elif encoding_type == "Differential Manchester":
-            signal = differential_manchester_encode(data)
-            
+        elif encoding_type == "Differential Manchester (Initially High)":
+            signal = differential_manchester_high_encode(data)
+        elif encoding_type == "Differential Manchester (Initially Low)":
+            signal = differential_manchester_low_encode(data)
+
         plt.figure(figsize=(10, 2))
         plt.step(range(len(signal)), signal, where='mid')
         plt.ylim(-2, 2)
