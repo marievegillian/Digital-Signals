@@ -42,7 +42,7 @@ def pesudoternary_encode(data):
 def manchester_encode(data):
     """Manchester encoding"""
     signal = []
-     for bit in data:
+    for bit in data:
         if bit == '1':
             signal.extend([1, -1])  # High-to-low transition
         else:
