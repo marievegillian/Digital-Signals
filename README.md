@@ -19,4 +19,4 @@ I used python for the program and deployed using streamlit.
 
 <br><br>
 
-*Note: I am using a free steamlit account so my app goes to sleep after 5 days of inactivity. Contact me [here](mailto:marievegillian@gmail.com) if you want me to reactivate the app.* 💗
+*I am using a free steamlit account.*
